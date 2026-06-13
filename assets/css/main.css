@@ -566,16 +566,26 @@ img, svg { max-width: 100%; height: auto; display: block; }
   h2 { font-size: var(--text-xl); }
 
   .nav-toggle { display: block; }
+  /* position:absolute (not fixed) so iOS backdrop-filter containing-block
+     bug doesn't give the nav zero height */
   .site-nav {
-    position: fixed;
-    inset: 72px 0 0 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: calc(100vh - 72px);
     background: rgba(23, 28, 35, 0.98);
-    transform: translateY(-105%);
+    transform: translateY(-110%);
     transition: transform var(--t-med);
     overflow-y: auto;
     z-index: 50;
+    /* prevent invisible overlay from swallowing taps when closed */
+    pointer-events: none;
   }
-  .nav-open .site-nav { transform: translateY(0); }
+  .nav-open .site-nav {
+    transform: translateY(0);
+    pointer-events: auto;
+  }
   .nav-open .nav-toggle .bar:nth-child(1) { transform: translateY(6px) rotate(45deg); }
   .nav-open .nav-toggle .bar:nth-child(2) { opacity: 0; }
   .nav-open .nav-toggle .bar:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }

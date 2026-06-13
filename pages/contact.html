@@ -43,8 +43,8 @@
   <div class="wrap contact-grid">
     <div class="reveal">
       <h2>Request for Quote</h2>
-      <!-- OWNER ACTION REQUIRED: Register at formspree.io, create a new form, and replace REPLACE_WITH_YOUR_FORMSPREE_ID with your actual Formspree form ID. -->
-      <form id="rfq-form" class="form-grid" action="https://formspree.io/f/REPLACE_WITH_YOUR_FORMSPREE_ID" method="POST">
+      <p class="muted" style="margin-bottom: var(--space-md);">Fill in what you can, then click <strong>Compose RFQ Email</strong>. Your email app opens with everything organized and addressed to us — just attach your drawing and send.</p>
+      <form id="rfq-form" class="form-grid" novalidate>
         <div class="field">
           <label for="name">Full Name <span class="req">*</span></label>
           <input type="text" id="name" name="name" required autocomplete="name">
@@ -84,12 +84,12 @@
           <textarea id="notes" name="notes"></textarea>
         </div>
         <div class="form-note field--full">
-          For drawings and spec sheets, please email directly to
-          <a href="mailto:crown.link@msa.hinet.net">crown.link@msa.hinet.net</a> — include your name and
-          company in the subject line. Accepted formats: PDF, DWG, DXF, STEP, IGES.
+          <strong>Attach your drawing in the email that opens.</strong> Accepted formats: PDF, DWG, DXF, STEP, IGES.
+          If your email app does not open, write to
+          <a href="mailto:crown.link@msa.hinet.net">crown.link@msa.hinet.net</a> directly.
         </div>
         <div class="field--full">
-          <button type="submit" class="btn btn--primary">Send RFQ</button>
+          <button type="submit" class="btn btn--primary">Compose RFQ Email</button>
         </div>
       </form>
     </div>

@@ -65,6 +65,70 @@
     }
   }
 
+  /* ---------- Contact page: build pre-filled RFQ email on submit ---------- */
+  var rfqForm = document.getElementById("rfq-form");
+  if (rfqForm) {
+    var RFQ_TO = "crown.link@msa.hinet.net";
+    var val = function (id) {
+      var el = document.getElementById(id);
+      return el ? el.value.trim() : "";
+    };
+    rfqForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      // Validate required fields
+      var missing = [];
+      if (!val("name")) missing.push("Full Name");
+      if (!val("company")) missing.push("Company Name");
+      if (!val("email")) missing.push("Email Address");
+      if (!val("product")) missing.push("Product(s) of Interest");
+      if (missing.length) {
+        window.alert("Please fill in: " + missing.join(", "));
+        var firstId = { "Full Name": "name", "Company Name": "company",
+          "Email Address": "email", "Product(s) of Interest": "product" }[missing[0]];
+        var firstEl = document.getElementById(firstId);
+        if (firstEl) firstEl.focus();
+        return;
+      }
+
+      var company = val("company");
+      var subject = "RFQ — " + company + " — Crown Link";
+
+      // Build a clean, ordered email body. Only include filled optional fields.
+      var lines = [
+        "REQUEST FOR QUOTE",
+        "================================",
+        "",
+        "Contact:        " + val("name"),
+        "Company:        " + company,
+        "Email:          " + val("email")
+      ];
+      if (val("phone")) lines.push("Phone:          " + val("phone"));
+      lines.push("");
+      lines.push("Product(s) of Interest:");
+      lines.push(val("product"));
+      lines.push("");
+      if (val("quantity")) lines.push("Estimated Quantity / Order Size: " + val("quantity"));
+      if (val("standards")) lines.push("Standards / Certifications:      " + val("standards"));
+      if (val("finish")) lines.push("Surface Finish Required:         " + val("finish"));
+      if (val("notes")) {
+        lines.push("");
+        lines.push("Additional Notes / Specifications:");
+        lines.push(val("notes"));
+      }
+      lines.push("");
+      lines.push("--------------------------------");
+      lines.push("ATTACH YOUR DRAWING TO THIS EMAIL before sending");
+      lines.push("(PDF, DWG, DXF, STEP, or IGES).");
+
+      var href = "mailto:" + RFQ_TO +
+        "?subject=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(lines.join("\r\n"));
+
+      window.location.href = href;
+    });
+  }
+
   /* ---------- Contact page: pre-fill product of interest ---------- */
   var productField = document.getElementById("product");
   if (productField) {
